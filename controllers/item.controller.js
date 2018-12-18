@@ -26,3 +26,17 @@ exports.createItem = function (req, res) {
         res.send('Product Created successfully')
     })
 };
+
+
+exports.getItems=function (req, res, next) {
+    Item.find({})
+        .exec()
+        .then(docs => {
+            res.status(200).json({
+                docs
+            });
+        })
+        .catch(err => {
+            console.log(err)
+        });
+};
