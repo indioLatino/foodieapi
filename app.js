@@ -4,8 +4,14 @@ const bodyParser = require('body-parser');
 const item = require('./routes/item.route'); // Imports routes for the products
 // Set up mongoose connection
 const mongoose = require('mongoose');
-let dev_db_url = 'mongodb://foodieMongoUser:15091821@localhost:27017/Foodie?authSource=Foodie';
+let dev_db_url = 'mongodb://localhost/foodie';
 let mongoDB = process.env.MONGODB_URI || dev_db_url;
+/*mongoose.connect("mongodb://localhost:27017/foodie", {
+    "user": "foodieMongoUser",
+    "pass": "15091821",
+    "useMongoClient": true,
+    "useNewUrlParser": true
+});*/
 mongoose.connect(mongoDB,{ useNewUrlParser: true });
 mongoose.Promise = global.Promise;
 let db = mongoose.connection;
