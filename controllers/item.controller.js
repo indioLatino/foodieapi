@@ -40,3 +40,30 @@ exports.getItems=function (req, res, next) {
             console.log(err)
         });
 };
+
+exports.getItemDetail = function (req, res) {
+    Item.findById(req.query.id, function (err, item) {
+        if (err){
+          res.send(err);
+        }
+        res.send(item);
+    })
+};
+
+exports.updateItem = function(req, res){
+    Item.findByIdAndUpdate(req.query.id, {$set: req.body}, function (err, item) {
+          if (err){
+            return next(err);
+          }
+          res.status(200).send('Item udpated.');
+      });
+}
+
+exports.deleteItem = function (req, res) {
+    Item.findByIdAndRemove(req.query.id, function (err) {
+        if (err){
+          return next(err);
+        }
+        res.send('Deleted successfully!');
+    })
+};
