@@ -31,9 +31,9 @@ exports.createItem = function (req, res) {
 exports.getItems=function (req, res, next) {
     Item.find({})
         .exec()
-        .then(docs => {
+        .then(items => {
             res.status(200).json({
-                docs
+                items
             });
         })
         .catch(err => {

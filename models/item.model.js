@@ -7,6 +7,7 @@ const Schema = mongoose.Schema;
 let ItemSchema = new Schema({
     itemName: {type: String, required: true},
     itemDescription:{type: String, required: true},
+    itemMainImage:{type: String, required: true},
     productList: [ProductSchema],
     instructions:[InstructionSchema]
 });
