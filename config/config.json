@@ -1,0 +1,17 @@
+{
+    "development": {
+        "config_id": "development",
+        "app_name": "foodieapi",
+        "node_port": 1234,
+        "database": "mongodb://localhost/foodie"
+    },
+    "testing": {
+        "config_id": "testing",
+        "database": "my-app-db-test"
+    },
+    "production": {
+        "config_id": "production",
+        "node_port": 8080,
+        "database": "my-app-db-prod"
+    }
+}
