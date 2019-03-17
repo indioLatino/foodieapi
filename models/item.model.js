@@ -5,6 +5,7 @@ ProductSchema = mongoose.model('Product').schema;
 InstructionSchema = mongoose.model('Instruction').schema;
 const Schema = mongoose.Schema;
 let ItemSchema = new Schema({
+    // _id:{type: String, required: false},
     itemName: {type: String, required: true},
     itemDescription:{type: String, required: true},
     itemMainImage:{type: String, required: true},

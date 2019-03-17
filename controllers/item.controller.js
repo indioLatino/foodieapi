@@ -21,7 +21,8 @@ exports.createItem = function (req, res) {
 
     item.save(function (err) {
         if (err) {
-          res.send(err);
+          // res.send(err);
+          return next(err);
         }
         res.send('Product Created successfully')
     })
@@ -38,13 +39,15 @@ exports.getItems=function (req, res, next) {
         })
         .catch(err => {
             console.log(err)
+            return next(err);
         });
 };
 
 exports.getItemDetail = function (req, res) {
     Item.findById(req.query.id, function (err, item) {
         if (err){
-          res.send(err);
+          // res.send(err);
+          return next(err);
         }
         res.send(item);
     })
