@@ -31,15 +31,27 @@ app.use('/item', item);
 app.use('/user', user);
 
 
+
+app.use(function(req, res, next) {
+   res.header("Access-Control-Allow-Origin", "*");
+   res.header("Access-Control-Allow-Headers", "Origin, X-Requested-With, Content-Type, Accept");
+   console.log("Se ejecuta cabeza de pija");
+   next();
+}
+);
+
+
 app.use(
   (error, req, res, next) => {
     console.log("Se ejecuta lokita");
     res.status(error.status || 500);
+    console.log("Se ejecuta lokita 2");
     res.json({
       error: {
         message: error.message,
       },
     });
+    console.log("Se ejecuta lokita 3");
   }
 //   function (err, req, res, next) {
 //   console.log("Hola Hola Hola");
@@ -47,20 +59,6 @@ app.use(
 //   res.status(error.code).send(error.message);
 // }
 );
-
-
-
-
-app.use(function(req, res, next) {
-   res.header("Access-Control-Allow-Origin", "*");
-   res.header("Access-Control-Allow-Headers", "Origin, X-Requested-With, Content-Type, Accept");
-  // next();
-}
-);
-
-
-
-
 
 let port = global.gConfig.node_port;
 let app_name=global.gConfig.app_name;

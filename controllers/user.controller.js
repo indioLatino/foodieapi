@@ -21,9 +21,9 @@ exports.createUser = function (req, res, next) {
     user.save(function (err) {
         if (err) {
           next(err);
-          // res.send(err);
+        }else{
+          res.send('User Created successfully')
         }
-        res.send('User Created successfully')
     })
 };
 
@@ -37,18 +37,17 @@ exports.getUsers=function (req, res, next) {
             });
         })
         .catch(err => {
-            // console.log(err)
-            return next(err);
+            next(err);
         });
 };
 
 exports.getUserDetail = function (req, res) {
     User.findById(req.query.id, function (err, user) {
         if (err){
-          // res.send(err);
-          return next(err);
+          next(err);
+        }else{
+          res.send(user);
         }
-        res.send(user);
     })
 };
 
@@ -65,7 +64,8 @@ exports.deleteUser = function (req, res) {
     Item.findByIdAndRemove(req.query.id, function (err) {
         if (err){
           return next(err);
+        }else{
+          res.send('Deleted successfully!');
         }
-        res.send('Deleted successfully!');
     })
 };
