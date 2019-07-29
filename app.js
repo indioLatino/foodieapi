@@ -26,12 +26,6 @@ app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({extended: false}));
 
 
-
-app.use('/item', item);
-app.use('/user', user);
-
-
-
 app.use(function(req, res, next) {
    res.header("Access-Control-Allow-Origin", "*");
    res.header("Access-Control-Allow-Headers", "Origin, X-Requested-With, Content-Type, Accept");
@@ -40,6 +34,8 @@ app.use(function(req, res, next) {
 }
 );
 
+app.use('/item', item);
+app.use('/user', user);
 
 app.use(
   (error, req, res, next) => {
@@ -53,11 +49,6 @@ app.use(
     });
     console.log("Se ejecuta lokita 3");
   }
-//   function (err, req, res, next) {
-//   console.log("Hola Hola Hola");
-//   // console.error(err.stack);
-//   res.status(error.code).send(error.message);
-// }
 );
 
 let port = global.gConfig.node_port;
