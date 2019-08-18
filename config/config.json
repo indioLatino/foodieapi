@@ -4,19 +4,22 @@
         "app_name": "foodieapi",
         "node_port": 1234,
         "database": "mongodb://localhost/foodie",
-        "grocery_api_url": "localhost:8080"
+        "grocery_api_url": "localhost",
+        "grocery_api_port": 8080
     },
     "validation": {
         "config_id": "validation",
         "app_name": "foodieapi",
         "node_port": 1234,
         "database": "mongodb+srv://indioLempira:elpelucasape@foodie-k2paf.mongodb.net/foodie?retryWrites=true&w=majority",
-        "grocery_api_url": "localhost:8080"
+        "grocery_api_url": "localhost",
+        "grocery_api_port": 8080
     },
     "production": {
         "config_id": "production",
         "node_port": 8080,
         "database": "my-app-db-prod",
-        "grocery_api_url": "localhost:8080"
+        "grocery_api_url": "localhost",
+        "grocery_api_port": 8080
     }
 }

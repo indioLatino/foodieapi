@@ -1,8 +1,9 @@
-const Item = require('../models/item.model');
-const User = require('../models/user.model');
-const Product = require('../models/product.model');
-const Instruction = require('../models/instruction.model');
-const ItemUser = require('../models/item-user.model');
+const Item = require('../models/mongodb/item.model');
+const User = require('../models/mongodb/user.model');
+const ItemDetailResponse = require('../models/responses/item-detail-response.model');
+
+//GROCERY-API
+const groceryApi = require('../services/grocery.service');
 
 //Simple version, without validation or sanitation
 exports.test = function (req, res) {
@@ -88,12 +89,22 @@ exports.getItemsWithUser=function (req, res, next) {
         });
 };
 
-exports.getItemDetail = function (req, res) {
-    Item.findById(req.query.id, function (err, item) {
+exports.getItemDetail = function (req, res, next) {
+    Item.findById(req.query.id, function (err, globalItem) {
         if (err){
           next(err);
         }else{
-          res.send(item);
+
+            groceryApi.getShoppingBasketsListByItemId(globalItem._id).then((shopingBasketsList) => {
+                console.log(shopingBasketsList);
+                let itemDetailResponse = new ItemDetailResponse(globalItem, shopingBasketsList);
+                res.send(itemDetailResponse);
+            }).catch((error) => {
+                console.log(error);
+                let itemDetailResponse = new ItemDetailResponse(globalItem);
+                res.send(itemDetailResponse);
+            });
+
         }
     })
 };

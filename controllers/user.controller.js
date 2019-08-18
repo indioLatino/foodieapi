@@ -1,4 +1,4 @@
-const User = require('../models/user.model');
+const User = require('../models/mongodb/user.model');
 
 //Simple version, without validation or sanitation
 exports.test = function (req, res) {

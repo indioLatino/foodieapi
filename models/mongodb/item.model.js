@@ -1,7 +1,7 @@
 const mongoose = require('mongoose');
-Product = require('../models/product.model');
-Instruction = require('../models/instruction.model');
-Creator = require('../models/creator.model');
+Product = require('./product.model');
+Instruction = require('./instruction.model');
+Creator = require('./creator.model');
 ProductSchema = mongoose.model('Product').schema;
 InstructionSchema = mongoose.model('Instruction').schema;
 CreatorSchema = mongoose.model('Creator').schema;
