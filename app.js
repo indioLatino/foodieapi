@@ -10,12 +10,20 @@ const bodyParser = require('body-parser');
 
 const item = require('./routes/item.route'); // Imports routes for the items
 const user = require('./routes/user.route'); // Imports routes for the user
+const fileUploader = require('./routes/file-uploader.route'); // Imports routes for the file-uploader
+
 // Set up mongoose connection
 const mongoose = require('mongoose');
 process.env.NODE_ENV = 'development';
 let dev_db_url = global.gConfig.database;
 let mongoDB = process.env.MONGODB_URI || dev_db_url;
-mongoose.connect(mongoDB,{ useNewUrlParser: true });
+mongoose.connect(
+    mongoDB,
+    {
+        useUnifiedTopology: true,
+        useNewUrlParser: true
+    }
+    );
 mongoose.Promise = global.Promise;
 let db = mongoose.connection;
 db.on('error', console.error.bind(console, 'MongoDB connection error:'));
@@ -27,7 +35,9 @@ app.use(bodyParser.urlencoded({extended: false}));
 
 
 app.use(function(req, res, next) {
-   res.header("Access-Control-Allow-Origin", "*");
+   var allowedOrigin = ["http://localhost:4200"];
+   res.header("Access-Control-Allow-Origin", allowedOrigin);
+   res.header("Access-Control-Allow-Credentials", true);
    res.header("Access-Control-Allow-Headers", "Origin, X-Requested-With, Content-Type, Accept, x-ijt");
    next();
 }
@@ -35,6 +45,7 @@ app.use(function(req, res, next) {
 
 app.use('/item', item);
 app.use('/user', user);
+app.use('/fileUploader', fileUploader);
 
 app.use(
   (error, req, res, next) => {
