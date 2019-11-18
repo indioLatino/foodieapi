@@ -10,7 +10,7 @@ const bodyParser = require('body-parser');
 
 const item = require('./routes/item.route'); // Imports routes for the items
 const user = require('./routes/user.route'); // Imports routes for the user
-const fileUploader = require('./routes/file-uploader.route'); // Imports routes for the file-uploader
+const aws = require('./routes/aws.route'); // Imports routes for the file-uploader
 
 // Set up mongoose connection
 const mongoose = require('mongoose');
@@ -45,7 +45,7 @@ app.use(function(req, res, next) {
 
 app.use('/item', item);
 app.use('/user', user);
-app.use('/fileUploader', fileUploader);
+app.use('/aws', aws);
 
 app.use(
   (error, req, res, next) => {

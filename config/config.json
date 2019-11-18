@@ -3,8 +3,12 @@
         "config_id": "development",
         "app_name": "foodieapi",
         "node_port": 1234,
-        "aws_access_key_id": "AKIA4UZ6KTWAYO3ICQM5",
-        "aws_secret_access_key": "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",
+        "aws": {
+            "aws_access_key_id": "AKIA4UZ6KTWAYO3ICQM5",
+            "aws_secret_access_key": "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",
+            "aws_s3_endpoint": "https://foodieapi.s3.amazonaws.com",
+            "aws_region":"eu-west-1"
+        },
         "database": "mongodb://localhost/foodie",
         "grocery_api_url": "localhost",
         "grocery_api_port": 8080
@@ -13,8 +17,12 @@
         "config_id": "validation",
         "app_name": "foodieapi",
         "node_port": 1234,
-        "aws_access_key_id": "AKIA4UZ6KTWAYO3ICQM5",
-        "aws_secret_access_key": "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",
+        "aws": {
+            "aws_access_key_id": "AKIA4UZ6KTWAYO3ICQM5",
+            "aws_secret_access_key": "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",
+            "aws_s3_endpoint": "https://foodieapi.s3.amazonaws.com",
+            "aws_region":"eu-west-1"
+        },
         "database": "mongodb+srv://indioLempira:elpelucasape@foodie-k2paf.mongodb.net/foodie?retryWrites=true&w=majority",
         "grocery_api_url": "localhost",
         "grocery_api_port": 8080
@@ -22,8 +30,12 @@
     "production": {
         "config_id": "production",
         "node_port": 8080,
-        "aws_access_key_id": "AKIA4UZ6KTWAYO3ICQM5",
-        "aws_secret_access_key": "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",
+        "aws": {
+            "aws_access_key_id": "AKIA4UZ6KTWAYO3ICQM5",
+            "aws_secret_access_key": "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",
+            "aws_s3_endpoint": "",
+            "aws_region":"eu-west-1"
+        },
         "database": "my-app-db-prod",
         "grocery_api_url": "localhost",
         "grocery_api_port": 8080
