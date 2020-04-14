@@ -10,23 +10,25 @@ exports.test = function (req, res) {
     res.send('Greetings from the Test controller!');
 };
 
-// controllers/products.js
+// todo: return the item inserted
 exports.createItem = function (req, res, next) {
 
     let item = new Item(
         {
             itemName: req.body.itemName,
             itemDescription: req.body.itemDescription,
+            itemMainImage: req.body.itemMainImage,
+            creator: req.body.creator,
             productList: req.body.productList,
             instructions: req.body.instructions
         }
     );
 
-    item.save(function (err) {
+    item.save(function (err, item) {
         if (err) {
           next(err);
         }else{
-          res.send('Product Created successfully');
+          res.send(item);
         }
     })
 };

@@ -3,10 +3,14 @@ const Schema = mongoose.Schema;
 let UserSchema = new Schema({
     // _id:{type: String, required: false},
     userName: {type: String, required: true},
-    userNickname:{type: String, required: false},
-    userProfilePicture:{type: String, required: false},
+    userLastName: {type: String, required: true},
+    userEmail: {type: String, required: true},
+    userGender: {type: String, required: true},
+    userNickname: {type: String, required: false},
+    userProfilePicture: {type: String, required: false},
     userRegistrationDate: {type: Date, required: true},
-    userPostsNumber:{type: Number, required: false}
+    userCognitoName: {type: String, required: false},
+    userPostsNumber: {type: Number, required: false}
 });
 
 

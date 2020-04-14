@@ -9,7 +9,7 @@
             "aws_s3_endpoint": "https://foodieapi.s3.amazonaws.com",
             "aws_region":"eu-west-1"
         },
-        "database": "mongodb://localhost/foodie",
+        "database": "mongodb+srv://indioLempira:elpelucasape@foodie-k2paf.mongodb.net/foodie?retryWrites=true&w=majority",
         "grocery_api_url": "localhost",
         "grocery_api_port": 8080
     },
