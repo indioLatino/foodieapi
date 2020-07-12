@@ -9,7 +9,7 @@ const item_controller = require('../controllers/item.controller');
 router.get('/test', item_controller.test);
 router.post('/create', item_controller.createItem);
 router.get('/get', item_controller.getItems);
-router.get('/getI', item_controller.getItemsWithUser);
+router.get('/getItemsWithUser', item_controller.getItemsWithUser);
 router.get('/detail', item_controller.getItemDetail);
 router.put('/update', item_controller.updateItem);
 router.delete('/delete', item_controller.deleteItem);

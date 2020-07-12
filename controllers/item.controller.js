@@ -7,7 +7,7 @@ const groceryApi = require('../services/grocery.service');
 
 //Simple version, without validation or sanitation
 exports.test = function (req, res) {
-    res.send('Greetings from the Test controller!');
+    res.send('Hola desde foodie-api!');
 };
 
 // todo: return the item inserted
@@ -54,6 +54,7 @@ exports.getItems=function (req, res, next) {
         });
 };
 
+//todo: finish this method
 exports.getItemsWithUser=function (req, res, next) {
     var offset = req.query.offset;
     console.log(offset);

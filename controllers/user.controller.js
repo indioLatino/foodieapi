@@ -2,7 +2,7 @@ const User = require('../models/mongodb/user.model');
 
 //Simple version, without validation or sanitation
 exports.test = function (req, res) {
-    res.send('Greetings from the Test controller!');
+    res.send('El endpoint user funciona!');
 };
 
 // controllers/products.js
@@ -61,12 +61,12 @@ exports.updateUser = function (req, res) {
         if (err) {
             return next(err);
         }
-        res.status(200).send('User udpated.');
+        res.status(200).send('User updated.');
     });
 }
 
 exports.deleteUser = function (req, res) {
-    Item.findByIdAndRemove(req.query.id, function (err) {
+    User.findByIdAndRemove(req.query.id, function (err) {
         if (err) {
             return next(err);
         } else {
