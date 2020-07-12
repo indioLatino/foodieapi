@@ -1,0 +1,44 @@
+{
+  "name": "foodieapi",
+  "version": "1.0.0",
+  "description": "API to provide service to the foodie's front-ends",
+  "main": "index.js",
+  "scripts": {
+    "test": "mocha"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/indioLatino/foodieapi.git"
+  },
+  "keywords": [
+    "foodie"
+  ],
+  "author": "Rodolfo Galo",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/indioLatino/foodieapi/issues"
+  },
+  "homepage": "https://github.com/indioLatino/foodieapi#readme",
+  "dependencies": {
+    "amazon-cognito-identity-js": "^4.2.1",
+    "aws-sdk": "^2.561.0",
+    "body-parser": "^1.19.0",
+    "cognito-express": "^2.0.16",
+    "dotenv": "^8.2.0",
+    "express": "^4.16.4",
+    "filereader": "^0.10.3",
+    "formidable": "^1.2.1",
+    "jsonwebtoken": "^8.5.1",
+    "jwk-to-pem": "^2.0.3",
+    "lodash": "^4.17.15",
+    "mongoose": "^5.7.7",
+    "multer": "^1.4.2",
+    "multer-s3": "^2.9.0",
+    "node-fetch": "^2.6.0",
+    "nodemon": "^1.19.4",
+    "request": "^2.88.2"
+  },
+  "devDependencies": {
+    "mocha": "^7.1.1"
+  }
+}

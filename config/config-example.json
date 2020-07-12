@@ -1,0 +1,17 @@
+{
+    "development": {
+    "config_id": "development",
+        "app_name": "foodieapi",
+        "node_port": 1234,
+        "aws": {
+            "aws_access_key_id": "PLACE_HERE_YOUR_ID",
+            "aws_secret_access_key": "PLACE_HERE_YOUR_KEY",
+            "aws_s3_endpoint": "PLACE_HERE_YOUR_BUCKET_URL",
+            "aws_region":"PLACE_HERE_YOUR_REGION",
+            "cognito_pool_id": "PLACE_HERE_YOUR_POOL_ID"
+    },
+    "database": "PLACE_HERE_YOUR_DB_URI",
+        "grocery_api_url": "PLACE_HERE_YOUR_GROCCERY_API_URI",
+        "grocery_api_port": 8080
+}
+}
