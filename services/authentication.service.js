@@ -16,7 +16,19 @@ const cognitoExpress = new CognitoExpress({
     tokenUse: "access", //Possible Values: access | id
     tokenExpiration: 3600000 //Up to default expiration of 1 hour (3600000 ms)
 });
+const awsController = require('../controllers/aws.controller');
 
+
+
+exports.getCognitoUser = async function (jwt) {
+    awsController.getUserDetail(jwt);
+}
+
+
+/*const poolData = {
+    UserPoolId : "eu-west-1_nILn3C1nT",//cognitoUserPoolId: global.gConfig.aws.cognito_pool_id, // Your user pool id here
+    ClientId :  "77at440r3d1e9cfpvmob6lke8m"// Your client id here
+};*/
 
 exports.isValidAccessToken = async function (jwt, next) {
     return new Promise(
@@ -37,6 +49,7 @@ exports.isValidAccessToken = async function (jwt, next) {
                 } else {
                     console.log(response)
                     resolve("success");
+
                 }
             })
             //.catch((error) => {

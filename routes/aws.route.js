@@ -1,7 +1,8 @@
 const express = require('express');
 const router = express.Router();
+const cors = require('cors')
 const awsController = require('../controllers/aws.controller');
-
+express().options('/aws/awsSignPostRequest', cors());
 router.get('/test', (req,res) => {
     res.send('Greetings from the Test controller!');
 });

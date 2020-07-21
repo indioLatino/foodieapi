@@ -14,7 +14,26 @@ aws.config.update({
 });
 
 const s3 = new aws.S3();
+const cognitoidentityserviceprovider = new aws.CognitoIdentityServiceProvider();
 
+exports.getUserDetail = function (token, next) {
+
+    return new Promise((resolve, reject) => {
+        var params = {
+            AccessToken: token /* required */
+        };
+        cognitoidentityserviceprovider.getUser(params, function (err, data) {
+            if (err) {
+                reject(err);
+            } else {
+                resolve(data);  // successful response
+                console.log(data);
+            }
+        });
+    });
+
+
+}
 exports.awsSignPostRequest = function (req, res, next) {
     req.body.conditions.splice(7, 1);
 
@@ -35,7 +54,7 @@ exports.awsSignPostRequest = function (req, res, next) {
         endpoint: new aws.Endpoint(awsS3EndPoint),
         useAccelerateEndpoint: false,
         s3ForcePathStyle: true,
-    }; 
+    };
 
     const client = new aws.S3(options);
 

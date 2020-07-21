@@ -36,10 +36,16 @@ app.use(bodyParser.urlencoded({extended: false}));
 
 
 app.use(function(req, res, next) {
-   var allowedOrigin = ["http://localhost:4200"];
+    var allowedOrigin;
+    // todo: replace for property values for the social-manager and login-manager urls
+    if (req.get('origin') == "http://localhost:4200" || req.get('origin') == "http://localhost:4201")
+    {
+        allowedOrigin = req.get('origin');
+    }
    res.header("Access-Control-Allow-Origin", allowedOrigin);
    res.header("Access-Control-Allow-Credentials", true);
    res.header("Access-Control-Allow-Headers", "Origin, X-Requested-With, Content-Type, Accept, x-ijt");
+   res.header("Access-Control-Allow-Methods","POST, PUT, GET, DELETE, OPTIONS")
    next();
 }
 );

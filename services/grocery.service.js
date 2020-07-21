@@ -41,7 +41,7 @@ let requestShoppingLists = function (itemId) {
                         let shopingBasketsList = content.shoppingBasketList;
                         resolve(shopingBasketsList);
                     }else{
-                        reject("No shopping list found for item: " +itemId);
+                        reject("No shopping list found for the item: " +itemId);
                     }
                 });
             });

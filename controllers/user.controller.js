@@ -1,4 +1,8 @@
 const User = require('../models/mongodb/user.model');
+const aws = require('aws-sdk');
+const awsController = require('./aws.controller');
+const authenticationService = require('../services/authentication.service');
+
 
 //Simple version, without validation or sanitation
 exports.test = function (req, res) {
@@ -10,6 +14,7 @@ exports.createUser = function (req, res, next) {
 
     let user = new User(
         {
+            _id: req.body.cognitoUserSub,
             userName: req.body.userName,
             userLastName: req.body.userLastName,
             userEmail: req.body.userEmail,
@@ -17,8 +22,7 @@ exports.createUser = function (req, res, next) {
             userNickname: req.body.userNickname,
             userProfilePicture: req.body.userProfilePicture,
             userRegistrationDate: req.body.userRegistrationDate,
-            userPostsNumber: req.body.userPostsNumber,
-            userCognitoName: req.body.userCognitoName
+            userPostsNumber: req.body.userPostsNumber
         }
     );
 
@@ -46,6 +50,33 @@ exports.getUsers = function (req, res, next) {
         });
 };
 
+exports.getUserDetailByToken = function (req, res, next) {
+    const accesToken = req.body.accessToken;
+    //Check if the token is valid
+    authenticationService.isValidAccessToken(accesToken).then((result) => {
+        // TOKEN valid
+        let cognitoUser;
+        //todo: get the sub/Username value from the jwt instead of making this call
+        awsController.getUserDetail(accesToken).then((cognitoUser) => {
+            this.cognitoUser = cognitoUser;
+            User.findById(cognitoUser.Username, function (err, user) {
+                if (err) {
+                    next(err);
+                } else {
+                    res.send(user);
+                }
+            })
+        }).catch((error) => {
+            // TOKEN not valid
+            console.log(error);
+            next(error);
+        });
+    }).catch((error) => {
+        res.status(440);
+        res.send(error.name);
+    });
+}
+
 exports.getUserDetail = function (req, res) {
     User.findById(req.query.id, function (err, user) {
         if (err) {
@@ -56,6 +87,7 @@ exports.getUserDetail = function (req, res) {
     })
 };
 
+//Todo: secure this endpoint
 exports.updateUser = function (req, res) {
     User.findByIdAndUpdate(req.query.id, {$set: req.body}, function (err, user) {
         if (err) {
