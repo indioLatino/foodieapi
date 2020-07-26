@@ -28,6 +28,30 @@ exports.getShoppingBasketsListByItemId = async function (itemId) {
 
 }
 
+exports.createShoppingList = function (item) {
+    options.path = `/createShoppingList`;
+    options.method = 'POST';
+    const req = http.request(options,(res) => {
+        res.on('data', (d) => {
+            if(res.statusCode === 200){
+                process.stdout.write(d);
+                let content = JSON.parse(d);
+            }else{
+                console.log('error al crear la cesta de la compra')
+            }
+        });
+    });
+    req.on('error', (error) => {
+        reject(error);
+    })
+    req.write(JSON.stringify({
+        itemId: item._id,
+        ingredientList: item.productList
+    }));
+
+    req.end();
+}
+
 let requestShoppingLists = function (itemId) {
     return new Promise(
         (resolve, reject) => {

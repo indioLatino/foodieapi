@@ -26,21 +26,33 @@ exports.createItem = function (req, res, next) {
 
     item.save(function (err, item) {
         if (err) {
-          next(err);
-        }else{
-          res.send(item);
+            next(err);
+        } else {
+            // groceryApi.createShoppingList(item);
+            res.send(item);
         }
     })
 };
 
+exports.updateItemsCreatorPhoto = function (creatorId, image, next) {
+    Item.updateMany({'creator.userId': creatorId}, {'creator.image': image}, function (err, item) {
+        if (err) {
+            next(err);
+        }
+    })
+}
 
-exports.getItems=function (req, res, next) {
+
+exports.getItems = function (req, res, next) {
+    var creatorId = req.query.creatorId;
     var offset = req.query.offset;
     console.log(offset);
     var limit = req.query.limit;
     console.log(limit);
-    Item.find({})
-        .skip(Number(offset))
+    Item.find({
+            ...creatorId ? {'creator.userId': creatorId} : {}
+        }
+    ).skip(Number(offset))
         .limit(Number(limit))
         .exec()
         .then(items => {
@@ -49,13 +61,14 @@ exports.getItems=function (req, res, next) {
             });
         })
         .catch(err => {
-          console.log(err)
-          next(err);
+            console.log(err)
+            next(err);
         });
-};
+}
+;
 
 //todo: finish this method
-exports.getItemsWithUser=function (req, res, next) {
+exports.getItemsWithUser = function (req, res, next) {
     var offset = req.query.offset;
     console.log(offset);
     var limit = req.query.limit;
@@ -66,25 +79,25 @@ exports.getItemsWithUser=function (req, res, next) {
         .limit(Number(limit))
         .exec()
         .then(items => {
-            itemUser.items=items;
+            itemUser.items = items;
             var user_ids = [];
             // var jsonItems = JSON.parse(items);
             // console.log(items[0].itemCreatorId);
             // console.log(items.length);
-            for(var i=0;i<items.length;i++){
-              user_ids.push(items[i].itemCreatorId);
-              // console.log(items[i].itemCreatorId);
+            for (var i = 0; i < items.length; i++) {
+                user_ids.push(items[i].itemCreatorId);
+                // console.log(items[i].itemCreatorId);
             }
             console.log(user_ids);
-            User.find({_id:{$in :user_ids}})
-            .exec()
-            .then(users => {
-                // console.log(users);
-                itemUser.users=users;
-                res.status(200).json({
-                    itemUser
+            User.find({_id: {$in: user_ids}})
+                .exec()
+                .then(users => {
+                    // console.log(users);
+                    itemUser.users = users;
+                    res.status(200).json({
+                        itemUser
+                    });
                 });
-            });
         })
         .catch(err => {
             console.log(err)
@@ -94,40 +107,42 @@ exports.getItemsWithUser=function (req, res, next) {
 
 exports.getItemDetail = function (req, res, next) {
     Item.findById(req.query.id, function (err, globalItem) {
-        if (err){
-          next(err);
-        }else{
-
-            groceryApi.getShoppingBasketsListByItemId(globalItem._id).then((shopingBasketsList) => {
-                console.log(shopingBasketsList);
-                let itemDetailResponse = new ItemDetailResponse(globalItem, shopingBasketsList);
-                res.send(itemDetailResponse);
-            }).catch((error) => {
-                console.log(error);
-                let itemDetailResponse = new ItemDetailResponse(globalItem);
-                res.send(itemDetailResponse);
-            });
-
+        if (err) {
+            next(err);
+        } else {
+            if (globalItem) {
+                groceryApi.getShoppingBasketsListByItemId(globalItem._id).then((shopingBasketsList) => {
+                    console.log(shopingBasketsList);
+                    let itemDetailResponse = new ItemDetailResponse(globalItem, shopingBasketsList);
+                    res.send(itemDetailResponse);
+                }).catch((error) => {
+                    console.log(error);
+                    let itemDetailResponse = new ItemDetailResponse(globalItem);
+                    res.send(itemDetailResponse);
+                });
+            }
         }
     })
 };
 
-exports.updateItem = function(req, res){
+// todo: secure this endpoint check for authentication and authorization (userId is the same than item.userId)
+exports.updateItem = function (req, res, next) {
     Item.findByIdAndUpdate(req.query.id, {$set: req.body}, function (err, item) {
-          if (err){
+        if (err) {
             next(err);
-          }else{
-            res.status(200).send('Item udpated.');
-          }
-      });
+        } else {
+            // groceryApi.createShoppingList(item);
+            res.status(200).send({'message': 'Item udpated.'});
+        }
+    });
 }
 
 exports.deleteItem = function (req, res) {
     Item.findByIdAndRemove(req.query.id, function (err) {
-        if (err){
-          return next(err);
-        }else{
-          res.send('Deleted successfully!');
+        if (err) {
+            return next(err);
+        } else {
+            res.send('Deleted successfully!');
         }
     })
 };

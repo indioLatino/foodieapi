@@ -2,6 +2,7 @@ const User = require('../models/mongodb/user.model');
 const aws = require('aws-sdk');
 const awsController = require('./aws.controller');
 const authenticationService = require('../services/authentication.service');
+const item_controller = require('../controllers/item.controller');
 
 
 //Simple version, without validation or sanitation
@@ -77,7 +78,7 @@ exports.getUserDetailByToken = function (req, res, next) {
     });
 }
 
-exports.getUserDetail = function (req, res) {
+exports.getUserDetail = function (req, res, next) {
     User.findById(req.query.id, function (err, user) {
         if (err) {
             next(err);
@@ -88,13 +89,19 @@ exports.getUserDetail = function (req, res) {
 };
 
 //Todo: secure this endpoint
-exports.updateUser = function (req, res) {
+exports.updateUser = function (req, res, next) {
     User.findByIdAndUpdate(req.query.id, {$set: req.body}, function (err, user) {
         if (err) {
             return next(err);
+        } else{
+            updateItemsUserImage(req.query.id, req.body.userProfilePicture, next);
+            res.send({'message':'updated'});
         }
-        res.status(200).send('User updated.');
     });
+}
+
+function updateItemsUserImage(creatorId, image, next) {
+    item_controller.updateItemsCreatorPhoto(creatorId, image, next)
 }
 
 exports.deleteUser = function (req, res) {
